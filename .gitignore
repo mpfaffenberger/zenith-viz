@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+#editor
+.idea/
+
+#cmake
+
+cmake-build-debug/
+build/
+dist/
+
+#python
+.eggs/
