@@ -1,7 +1,7 @@
 #ifndef ZENITH_GLMODEL_H
 #define ZENITH_GLMODEL_H
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 #include <string>
 #include <cstdlib>
 #include <cstdio>

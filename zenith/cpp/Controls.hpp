@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <tuple>
 #include <vector>
-#include "GL/glew.h"
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
 #include <glm/gtc/matrix_transform.hpp>

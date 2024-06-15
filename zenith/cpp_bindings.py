@@ -4,10 +4,7 @@ import platform
 import cppyy
 
 # These must be installed at the system level
-cppyy.add_include_path("/opt/homebrew/include")
-cppyy.add_library_path("/opt/homebrew/lib")
-cppyy.add_include_path("/usr/local/include")
-cppyy.add_library_path("/usr/local/lib")
+
 cppyy.c_include("GL/glew.h")
 cppyy.load_library("libGLEW")
 cppyy.c_include("GLFW/glfw3.h")

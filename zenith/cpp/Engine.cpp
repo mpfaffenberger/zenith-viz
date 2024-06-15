@@ -1,6 +1,6 @@
 using namespace std;
 #include "Engine.hpp"
-#include <GL/glew.h>
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <tuple>
 #include <vector>
@@ -12,8 +12,8 @@ using namespace std;
 #include "Controls.hpp"
 #include "GLModel.hpp"
 #include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/backends/imgui_impl_glfw.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
 
 
 Engine::Engine(std::string shaderPath) {

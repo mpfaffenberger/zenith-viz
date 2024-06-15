@@ -1,6 +1,6 @@
 #include "GLBoilerPlate.hpp"
 #include <iostream>
-#include <GL/glew.h>
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <string>
 #include <sstream>
@@ -12,8 +12,8 @@
 #include "Controls.hpp"
 #include "GLModel.hpp"
 #include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/backends/imgui_impl_glfw.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
 
 
 void resize_callback(GLFWwindow* window, int width, int height) {
@@ -25,7 +25,6 @@ static void glfwError(int id, const char* description) {
 }
 
 GLFWwindow* GLBoilerPlate::initWindow() {
-    glewExperimental = (GLboolean) true;
     glfwSetErrorCallback(&glfwError);
     if (!glfwInit()) {
         fprintf(stderr, "Couldn't initialize GLFW\n");
@@ -42,8 +41,9 @@ GLFWwindow* GLBoilerPlate::initWindow() {
         glfwTerminate();
     }
     glfwMakeContextCurrent(window);
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "Failed to initialize GLEW\n");
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
