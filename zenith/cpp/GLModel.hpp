@@ -1,10 +1,10 @@
 #ifndef ZENITH_GLMODEL_H
 #define ZENITH_GLMODEL_H
 
-#include <GL/glew.h>
 #include <string>
 #include <cstdlib>
 #include <cstdio>
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include "vector"
 #include "imgui/imgui.h"
@@ -43,8 +43,8 @@ public:
         int stride,
         GLuint drawType,
         std::string name,
-        float* color,
-        float* colordata,
+        const float* color,
+        const float* colordata,
         int useColorData,
         int id,
         std::vector<std::string> stringReps,
@@ -76,17 +76,17 @@ public:
     double time;
 
     GLModelAnimated(
-        float* vertexData,
+        const float* vertexData,
         int numVertices,
         int numComponents,
         int stride,
         GLuint drawType,
         unsigned int stepSize,
         unsigned int windowSize,
-        long* timeData,
+        const long* timeData,
         std::string name,
-        float* color,
-        float* colordata,
+        const float* color,
+        const float* colordata,
         int useColorData,
         int id,
         std::vector<std::string> stringReps,

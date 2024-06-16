@@ -3,7 +3,7 @@
 
 #include "Engine.hpp"
 
-#include <GL/glew.h>
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include <tuple>
 #include <vector>
@@ -15,13 +15,13 @@
 #include "Controls.hpp"
 #include "GLModel.hpp"
 #include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/backends/imgui_impl_glfw.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
 
 class Engine {
  public:
     std::string shaderPath;
-    std::map<int, GLModel *> *models;
+    std::map<int, GLModel*> *models;
     Controls *controls;
     GLFWwindow *window;
     GLBoilerPlate *bp;
@@ -56,6 +56,10 @@ class Engine {
         glm::mat4 rotation
     );
     virtual void animate();
+    bool addModel(int id, GLModel* model);
+    bool removeModel(int id);
+    bool modelExists(int id);
+    int numModels();
 };
 
 class Engine3d: public Engine {

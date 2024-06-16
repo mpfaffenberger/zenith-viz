@@ -9,7 +9,7 @@ struct record {
 
 GLModel* readData() {
     FILE* data;
-    data = fopen("/Users/m0p0cnb/code/zenith/zenith/cpp/signal_data.dat", "r");
+    data = fopen("/home/mpfaffenberger/code/zenith/zenith/cpp/signal_data.dat", "r");
     fseek(data, 0, SEEK_END);
     auto fileSize = ftell(data);
     auto numRecords = fileSize / sizeof(record);
@@ -51,7 +51,7 @@ GLModel* readData() {
 
 
 int main() {
-  auto shaderPath = new std::string("/Users/m0p0cnb/code/zenith/zenith/shaders");
+  auto shaderPath = new std::string("/home/mpfaffenberger/code/zenith/zenith/shaders");
   auto engine = new Engine(*shaderPath);
   auto model = readData();
   engine->models->insert(std::pair<int, GLModel*>(0, model));
