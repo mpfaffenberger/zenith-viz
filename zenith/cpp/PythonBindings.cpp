@@ -99,10 +99,13 @@ PYBIND11_MODULE(_zenith, m) {
         .def("remove_model", &Engine::removeModel)
         .def("model_exists", &Engine::modelExists)
         .def("num_models", &Engine::numModels);
+
     py::class_<GLModel>(m, "GLModel")
         .def("name", [](GLModel* model){ return model->name; });
+
     py::class_<GLModelAnimated>(m, "GLModelAnimated")
         .def("name", [](GLModel* model){ return model->name; });
+
     m.def(
         "create_gl_model",
         &create_gl_model,

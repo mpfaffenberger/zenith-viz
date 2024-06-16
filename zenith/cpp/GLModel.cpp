@@ -90,22 +90,23 @@ GLModel::~GLModel() {
 }
 
 void GLModel::initBuffer() {
-    if (!this->bufferInitialized) {
-        GLuint vertexbuffer;
-        glGenBuffers(1, &vertexbuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertices * numComponents, vertexData, GL_STATIC_DRAW);
-        this->vertexBuffer = vertexbuffer;
-
-        if (this->useColorData) {
-            GLuint vertexColorBuffer;
-            glGenBuffers(1, &vertexColorBuffer);
-            glBindBuffer(GL_ARRAY_BUFFER, vertexColorBuffer);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertices * numComponents, this->colorData, GL_STATIC_DRAW);
-            this->colorBuffer = vertexColorBuffer;
-        }
-        this->bufferInitialized = true;
+    if (this->bufferInitialized){
+        glDeleteBuffers(1, &this->vertexBuffer);
     }
+    GLuint vertexbuffer;
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertices * numComponents, vertexData, GL_STATIC_DRAW);
+    this->vertexBuffer = vertexbuffer;
+
+    if (this->useColorData) {
+        GLuint vertexColorBuffer;
+        glGenBuffers(1, &vertexColorBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexColorBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertices * numComponents, this->colorData, GL_STATIC_DRAW);
+        this->colorBuffer = vertexColorBuffer;
+    }
+    this->bufferInitialized = true;
 }
 
 void GLModel::bindVertexBuffer() {

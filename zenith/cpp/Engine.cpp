@@ -59,11 +59,9 @@ void Engine::initialize() {
     }
     projectionMatrix = glGetUniformLocation(shaderProgram, "MVP");
     modelAffine = glm::mat4(1.0f);
-    if (!vertexArrayInitialized) {
-        glGenVertexArrays(1, &vertexArrayId);
-        glBindVertexArray(vertexArrayId);
-        vertexArrayInitialized = true;
-    }
+    glGenVertexArrays(1, &vertexArrayId);
+    glBindVertexArray(vertexArrayId);
+    vertexArrayInitialized = true;
     for (auto && pair : *models) {
         pair.second->initBuffer();
     }
@@ -87,7 +85,6 @@ void Engine::initialize() {
 void Engine::deinitialize() {
     delete controls;
     delete bp;
-
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
