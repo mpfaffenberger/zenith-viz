@@ -241,7 +241,7 @@ class Zenith2D(ZenithCommon):
             string_data,
             picking_enabled
         )
-        self.__engine__.add_model(model_id, model)
+        print(self.__engine__.add_model(model_id, model))
         self.__layers__.append(model)
         self.__layer_ids__.add(model_id)
         return model_id

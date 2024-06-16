@@ -8,7 +8,7 @@
 
 namespace py = pybind11;
 
-GLModel create_gl_model(
+GLModel* create_gl_model(
     py::array_t<float> vertex_data,
     int num_vertices,
     int num_components,
@@ -25,7 +25,7 @@ GLModel create_gl_model(
     const float* vertex_data_ptr = static_cast<const float*>(vertex_data.data());
     const float* color_ptr = static_cast<const float*>(color.data());
     const float* color_data_ptr = static_cast<const float*>(color_data.data());
-    GLModel model = GLModel(
+    auto model = new GLModel(
         vertex_data_ptr,
         num_vertices,
         num_components,
@@ -43,7 +43,7 @@ GLModel create_gl_model(
 }
 
 
-GLModelAnimated create_gl_model_animated(
+GLModelAnimated* create_gl_model_animated(
     py::array_t<float> vertex_data,
     int num_vertices,
     int num_components,
@@ -64,7 +64,7 @@ GLModelAnimated create_gl_model_animated(
     const float* color_ptr = static_cast<const float*>(color.data());
     const float* color_data_ptr = static_cast<const float*>(color_data.data());
     const long* time_data_ptr = static_cast<const long*>(time_data.data());
-    GLModelAnimated model = GLModelAnimated(
+    auto model = new GLModelAnimated(
         vertex_data_ptr,
         num_vertices,
         num_components,
@@ -90,13 +90,15 @@ PYBIND11_MODULE(_zenith, m) {
         .def("animate", &Engine::animate)
         .def("add_model", &Engine::addModel)
         .def("remove_model", &Engine::removeModel)
-        .def("model_exists", &Engine::modelExists);
+        .def("model_exists", &Engine::modelExists)
+        .def("num_models", &Engine::numModels);
     py::class_<Engine3d>(m, "Engine3d")
         .def(py::init<const std::string &>())
         .def("animate", &Engine::animate)
         .def("add_model", &Engine::addModel)
         .def("remove_model", &Engine::removeModel)
-        .def("model_exists", &Engine::modelExists);
+        .def("model_exists", &Engine::modelExists)
+        .def("num_models", &Engine::numModels);
     py::class_<GLModel>(m, "GLModel")
         .def("name", [](GLModel* model){ return model->name; });
     py::class_<GLModelAnimated>(m, "GLModelAnimated")

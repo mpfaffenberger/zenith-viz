@@ -1,7 +1,6 @@
 #ifndef ZENITH_GLBOILERPLATE_H
 #define ZENITH_GLBOILERPLATE_H
 
-
 #include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include <map>

@@ -13,17 +13,17 @@ GLModel::GLModel(const float* vertexData, int numVertices, int numComponents, in
                  GLuint drawType, std::string name, const float* color, const float* colordata, int useColorData, int id,
                  std::vector<std::string> stringReps, bool pickingEnabled) {
     this->pickingEnabled = pickingEnabled;
-    drawStyles = new std::vector<std::string*>;
-    drawStyles->push_back(new std::string("GL_POINTS"));
-    drawStyles->push_back(new std::string("GL_LINES"));
-    drawStyles->push_back(new std::string("GL_LINE_LOOP"));
-    drawStyles->push_back(new std::string("GL_LINE_STRIP"));
-    drawStyles->push_back(new std::string("GL_TRIANGLES"));
-    drawStyles->push_back(new std::string("GL_TRIANGLE_STRIP"));
-    drawStyles->push_back(new std::string("GL_TRIANGLE_FAN"));
-    drawStyles->push_back(new std::string("GL_QUADS"));
-    drawStyles->push_back(new std::string("GL_QUAD_STRIP"));
-    drawStyles->push_back(new std::string("GL_POLYGON"));
+    this->drawStyles = new std::vector<std::string*>;
+    this->drawStyles->push_back(new std::string("GL_POINTS"));
+    this->drawStyles->push_back(new std::string("GL_LINES"));
+    this->drawStyles->push_back(new std::string("GL_LINE_LOOP"));
+    this->drawStyles->push_back(new std::string("GL_LINE_STRIP"));
+    this->drawStyles->push_back(new std::string("GL_TRIANGLES"));
+    this->drawStyles->push_back(new std::string("GL_TRIANGLE_STRIP"));
+    this->drawStyles->push_back(new std::string("GL_TRIANGLE_FAN"));
+    this->drawStyles->push_back(new std::string("GL_QUADS"));
+    this->drawStyles->push_back(new std::string("GL_QUAD_STRIP"));
+    this->drawStyles->push_back(new std::string("GL_POLYGON"));
     this->size = 3.0f;
     this->vertexData = (float*) malloc(sizeof(float) * numVertices * numComponents);
     for (int i=0; i < numVertices * numComponents; i++) {
@@ -41,7 +41,7 @@ GLModel::GLModel(const float* vertexData, int numVertices, int numComponents, in
 
     if (pickingEnabled) {
         this->tree_index = new VpTree<DataPoint, euclidean_distance>();
-        idxVertices = new std::vector<DataPoint>();
+        this->idxVertices = new std::vector<DataPoint>();
         int vertexIdx = 0;
         for (int i = 0; i < numVertices * numComponents; i = i + 3) {
             auto point = (float *) malloc(sizeof(float) * 3);
@@ -49,7 +49,7 @@ GLModel::GLModel(const float* vertexData, int numVertices, int numComponents, in
             point[1] = vertexData[i + 1];
             point[2] = vertexData[i + 2];
             auto datapoint = new DataPoint(3, vertexIdx, point);
-            idxVertices->push_back(*datapoint);
+            this->idxVertices->push_back(*datapoint);
             free(point);
             vertexIdx++;
         }
@@ -113,13 +113,12 @@ void GLModel::bindVertexBuffer() {
 }
 
 void GLModel::render(GLuint shaderProgram) {
-    ImGui::Begin("Models");
     ImGui::BeginChild(this->name.c_str(), ImVec2(400, 65));
     ImGui::Text(
         "Model Name: %s, Vertices: %d, draw-type: %s",
         this->name.c_str(),
         this->numVertices,
-        drawStyles->at(this->drawType)->c_str()
+        this->drawStyles->at(this->drawType)->c_str()
     );
     ImGui::ColorEdit4(this->name.c_str(), this->color);
     ImGui::SliderFloat("size", &size, 0.0f, 40.0f);
@@ -133,7 +132,7 @@ void GLModel::render(GLuint shaderProgram) {
     glUniform4f(colorVar, (GLfloat) color[0], (GLfloat) color[1], (GLfloat) color[2], (GLfloat) color[3]);
     glUniform1f(sizeVar, (GLfloat) size);
 
-    if (useColorData)
+    if (this->useColorData)
         glUniform1f(useColor, (GLfloat) 1.0f);
     else
         glUniform1f(useColor, (GLfloat) 0.0f);
@@ -302,7 +301,7 @@ void GLModelAnimated::createTimeSteps() {
     this->startOffsets = (unsigned int*) malloc(sizeof(unsigned int) * numSteps);
     this->endOffsets = (unsigned int*) malloc(sizeof(unsigned int) * numSteps);
     long curTime = minTime;
-    startOffsets[0] = 0;
+    this->startOffsets[0] = 0;
     int stepIdx = 1;
     for (unsigned int i=0; i < numVertices; i++) {
         long recordTime = timeData[i];

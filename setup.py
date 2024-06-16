@@ -1,12 +1,13 @@
 from typing import List
 
-from setuptools import setup, Extension
+from pybind11.setup_helpers import Pybind11Extension
+from setuptools import setup, find_namespace_packages
 from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 import pathlib
 import itertools
-
+setuptools.distutils.log.set_verbosity(1)
 __version__ = '0.0.3'
 
 
@@ -28,14 +29,17 @@ def filter_cpp_or_c_files(directory: pathlib.Path) -> List[pathlib.Path]:
     return files
 
 project_dirs = [
+    "zenith/cpp/glad/src",
     "zenith/cpp",
     "zenith/cpp/glfw/src",
     "zenith/cpp/imgui"
 ]
 
-zenith_srcs_with_deps = list(map(str, list(itertools.chain.from_iterable([
+
+
+zenith_srcs_with_deps = list(sorted(map(str, list(itertools.chain.from_iterable([
     filter_cpp_or_c_files(pathlib.Path(d)) for d in project_dirs
-]))))
+])))))
 
 zenith_srcs_with_deps = zenith_srcs_with_deps + [
     "zenith/cpp/imgui/backends/imgui_impl_opengl3.cpp",
@@ -43,16 +47,16 @@ zenith_srcs_with_deps = zenith_srcs_with_deps + [
 ]
 
 for item in zenith_srcs_with_deps:
-    print("Adding the following file to total sources: ", item)
+    print("Found Source File: ", item)
 
 
 def fq_path(p):
-    return str(pathlib.Path(p).absolute())
+    return str(pathlib.Path(p))
 
 
 zenith_include_dirs = [
     fq_path("zenith/cpp"),
-    fq_path("zenith/cpp/glfw/deps"),
+    fq_path("zenith/cpp/glad/include"),
     fq_path("zenith/cpp/glfw/include"),
     fq_path("zenith/cpp/glm"),
     fq_path("zenith/cpp/imgui"),
@@ -60,14 +64,15 @@ zenith_include_dirs = [
 ]
 print(zenith_include_dirs)
 ext_modules = [
-    Extension(
+    Pybind11Extension(
         '_zenith',
         zenith_srcs_with_deps,
         include_dirs=zenith_include_dirs,
-        language='c++'
+        language='c++',
+        extra_compile_args=["-g"],
+        force=True,
     ),
 ]
-
 
 # cf http://bugs.python.org/issue26689
 def has_flag(compiler, flagname):
@@ -126,15 +131,25 @@ class BuildExt(build_ext):
         ct = self.compiler.compiler_type
         opts = self.c_opts.get(ct, [])
         link_opts = self.l_opts.get(ct, [])
+        if sys.platform == "linux" or sys.platform == "linux2":
+            opts.append("-D_GLFW_X11")
+        elif sys.platform == "darwin":
+            opts.append("-D_GLFW_COCOA")
+        elif sys.platform == "win32":
+            opts.append("-D_GLFW_WIN32")
+        else:
+            print("This platform cannot support Zenith's window/rendering engine! Open an issue on Github.")
+            sys.exit(0)
+
         if ct == 'unix':
             opts.append(cpp_flag(self.compiler))
             if has_flag(self.compiler, '-fvisibility=hidden'):
                 opts.append('-fvisibility=hidden')
-
         for ext in self.extensions:
             ext.define_macros = [('VERSION_INFO', '"{}"'.format(self.distribution.get_version()))]
             ext.extra_compile_args = opts
             ext.extra_link_args = link_opts
+        self.force=True
         build_ext.build_extensions(self)
 
 
@@ -146,6 +161,15 @@ setup(
     url='https://github.com/mpfaffenberger/zenith',
     description='3D Accelerated Data Viz',
     long_description='',
+    packages=find_namespace_packages(where='./'),
+    package_data={
+        'zenith': [
+            'zenith/resources/colors.yml',
+            "zenith/shaders/fragmentShader.shader",
+            "zenith/shaders/vertexShader.shader"
+        ],
+    },
+    include_package_data=True,
     ext_modules=ext_modules,
     setup_requires=[
         'pybind11>=2.5.0',
@@ -155,7 +179,6 @@ setup(
     ],
     install_requires=[
         "jellyfish",
-        "cppyy",
         "numpy",
         "pandas",
         "pyyaml"

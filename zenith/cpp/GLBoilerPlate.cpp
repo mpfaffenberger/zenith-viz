@@ -1,7 +1,8 @@
-#include "GLBoilerPlate.hpp"
-#include <iostream>
 #include "glad/gl.h"
 #include <GLFW/glfw3.h>
+#include "GLBoilerPlate.hpp"
+#include <iostream>
+
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -25,6 +26,8 @@ static void glfwError(int id, const char* description) {
 }
 
 GLFWwindow* GLBoilerPlate::initWindow() {
+
+
     glfwSetErrorCallback(&glfwError);
     if (!glfwInit()) {
         fprintf(stderr, "Couldn't initialize GLFW\n");
@@ -44,6 +47,7 @@ GLFWwindow* GLBoilerPlate::initWindow() {
 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetFramebufferSizeCallback(window, resize_callback);
+    gladLoadGL(glfwGetProcAddress);
     return window;
 };
 

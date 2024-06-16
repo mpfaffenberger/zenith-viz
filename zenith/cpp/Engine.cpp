@@ -33,12 +33,6 @@ Engine::~Engine() {
     }
     if (shaderInitialized)
         glDeleteShader(shaderProgram);
-
-    for (auto && pair : *this->models) {
-        glDeleteBuffers(1, &pair.second->vertexBuffer);
-        pair.second->bufferInitialized = false;
-    }
-
 }
 
 void Engine::initControls() {
@@ -174,9 +168,6 @@ void Engine::renderSubroutine(
 }
 
 bool Engine::addModel(int id, GLModel *model) {
-    if (this->modelExists(id)) {
-        return false;
-    }
     this->models->insert(std::pair<int, GLModel*>(id, model));
     return true;
 }
@@ -190,7 +181,11 @@ bool Engine::removeModel(int id) {
 }
 
 bool Engine::modelExists(int id) {
-    return this->models->find(id) == this->models->end();
+    return this->models->find(id) != this->models->end();
+}
+
+int Engine::numModels() {
+    return this->models->size();
 }
 
 void Engine::animate() {
@@ -259,7 +254,6 @@ void Engine3d::initControls() {
 
 void Engine3d::animate() {
     initialize();
-    float slider = 0.0f;
     float fov = 90.0f;
     do {
         float scrollFactor;

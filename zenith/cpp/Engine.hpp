@@ -21,7 +21,7 @@
 class Engine {
  public:
     std::string shaderPath;
-    std::map<int, GLModel *> *models;
+    std::map<int, GLModel*> *models;
     Controls *controls;
     GLFWwindow *window;
     GLBoilerPlate *bp;
@@ -59,6 +59,7 @@ class Engine {
     bool addModel(int id, GLModel* model);
     bool removeModel(int id);
     bool modelExists(int id);
+    int numModels();
 };
 
 class Engine3d: public Engine {

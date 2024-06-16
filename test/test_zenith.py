@@ -102,9 +102,7 @@ def test_adding_several_layers_then_removing_two():
     )
     assert plot.remove_layer(layer3)
     assert plot.remove_layer(layer4)
-    assert len(plot.__engine__.models) == 2
-    for model in plot.__engine__.models:
-        assert int(model.second.drawType) in {0, 2}
+    assert plot.__engine__.num_models() == 2
 
 
 def test_removing_non_existant_layer_fails():

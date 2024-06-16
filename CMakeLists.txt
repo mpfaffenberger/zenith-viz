@@ -55,7 +55,6 @@ set(GLAD_ALL ${GLAD_BASE} ${GLAD_KHR} ${GLAD_SRC})
 
 glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui IMGUI_BASE_HEADERS)
 glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui IMGUI_BASE_SOURCES)
-
 set(IMGUI_ALL ${IMGUI_BASE_HEADERS} ${IMGUI_BASE_SOURCES})
 LIST(
     APPEND
@@ -99,4 +98,6 @@ include_directories(${PYTHON_INCLUDE_DIR})
 add_library(zenith SHARED ${ALL_SOURCES})
 target_link_libraries(zenith ${PYTHON_LIBRARIES})
 install(TARGETS zenith LIBRARY DESTINATION zenith/lib)
+
 add_executable(main ${ALL_SOURCES})
+target_compile_definitions(main PRIVATE _GLFW_X11)

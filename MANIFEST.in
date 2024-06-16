@@ -1,1 +1,3 @@
-recursive-include zenith *.shader *.cpp *.hpp *.h *.yml *.dylib *.so *.dll
+recursive-include zenith *
+recursive-include zenith/shaders *.shader
+recursive-include zenith/resources *.yml
