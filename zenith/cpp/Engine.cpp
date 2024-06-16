@@ -1,6 +1,9 @@
+#ifndef ZENITH_CPP_ENGINE_CPP_
+#define ZENITH_CPP_ENGINE_CPP_
+
 using namespace std;
 #include "Engine.hpp"
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include <tuple>
 #include <vector>
@@ -170,6 +173,26 @@ void Engine::renderSubroutine(
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
+bool Engine::addModel(int id, GLModel *model) {
+    if (this->modelExists(id)) {
+        return false;
+    }
+    this->models->insert(std::pair<int, GLModel*>(id, model));
+    return true;
+}
+
+bool Engine::removeModel(int id) {
+    if (this->modelExists(id)) {
+        this->models->erase(id);
+        return true;
+    }
+    return false;
+}
+
+bool Engine::modelExists(int id) {
+    return this->models->find(id) == this->models->end();
+}
+
 void Engine::animate() {
     initialize();
     float slider = 0.0f;
@@ -269,3 +292,4 @@ void Engine3d::animate() {
 
     deinitialize();
 }
+#endif

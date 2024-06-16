@@ -1,9 +1,10 @@
 #ifndef ZENITH_CPP_CONTROLS_HPP_
 #define ZENITH_CPP_CONTROLS_HPP_
+
 #include <cstdio>
 #include <tuple>
 #include <vector>
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
 #include <glm/gtc/matrix_transform.hpp>

@@ -1,6 +1,6 @@
 #include "GLBoilerPlate.hpp"
 #include <iostream>
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include <string>
 #include <sstream>
@@ -21,7 +21,7 @@ void resize_callback(GLFWwindow* window, int width, int height) {
 }
 
 static void glfwError(int id, const char* description) {
-  std::cout << description << std::endl;
+    std::cout << description << std::endl;
 }
 
 GLFWwindow* GLBoilerPlate::initWindow() {
@@ -41,10 +41,6 @@ GLFWwindow* GLBoilerPlate::initWindow() {
         glfwTerminate();
     }
     glfwMakeContextCurrent(window);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-    }
 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetFramebufferSizeCallback(window, resize_callback);
@@ -66,8 +62,8 @@ void GLBoilerPlate::render(GLFWwindow *window, std::map<int, GLModel*>* models, 
 
     glfwGetWindowSize(window, &width, &height);
     float resData[] = {
-        (float) width,
-        (float) height
+            (float) width,
+            (float) height
     };
 
     float fb_factor_x = (float) fb_width / width;
@@ -79,8 +75,8 @@ void GLBoilerPlate::render(GLFWwindow *window, std::map<int, GLModel*>* models, 
     double mouse_y = 0.0;
     glfwGetCursorPos(window, &mouse_x, &mouse_y);
     float mouseData[] = {
-        (float) (mouse_x / width) * fb_factor_x,
-        (float) ((height - (float) mouse_y) / height) * fb_factor_y
+            (float) (mouse_x / width) * fb_factor_x,
+            (float) ((height - (float) mouse_y) / height) * fb_factor_y
     };
 
     glUniform2fv(resolutionVar, 1, resData);

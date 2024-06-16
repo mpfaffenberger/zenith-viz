@@ -1,22 +1,11 @@
 #ifndef ZENITH_GLBOILERPLATE_H
 #define ZENITH_GLBOILERPLATE_H
 
-#include "glad/glad.h"
+
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
-#include <cstdio>
-#include <string>
-#include <sstream>
-#include <fstream>
-#include <vector>
 #include <map>
-#include <glm/fwd.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include "Controls.hpp"
 #include "GLModel.hpp"
-#include "imgui/imgui.h"
-#include "imgui/backends/imgui_impl_glfw.h"
-#include "imgui/backends/imgui_impl_opengl3.h"
 
 class GLBoilerPlate {
 public:

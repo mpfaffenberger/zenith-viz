@@ -3,7 +3,7 @@
 
 #include "Engine.hpp"
 
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include <GLFW/glfw3.h>
 #include <tuple>
 #include <vector>
@@ -56,6 +56,9 @@ class Engine {
         glm::mat4 rotation
     );
     virtual void animate();
+    bool addModel(int id, GLModel* model);
+    bool removeModel(int id);
+    bool modelExists(int id);
 };
 
 class Engine3d: public Engine {

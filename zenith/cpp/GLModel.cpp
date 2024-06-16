@@ -1,14 +1,16 @@
+#ifndef ZENITH_GLMODEL_C
+#define ZENITH_GLMODEL_C
+
 #include "GLModel.hpp"
-#include "glad/glad.h"
+#include "glad/gl.h"
+#include <GLFW/glfw3.h>
 #include <string>
 #include <cstdlib>
-#include <cstdio>
-#include <GLFW/glfw3.h>
 #include "vector"
 #include "imgui/imgui.h"
 
 GLModel::GLModel(const float* vertexData, int numVertices, int numComponents, int stride,
-                 GLuint drawType, std::string name, float* color, float* colordata, int useColorData, int id,
+                 GLuint drawType, std::string name, const float* color, const float* colordata, int useColorData, int id,
                  std::vector<std::string> stringReps, bool pickingEnabled) {
     this->pickingEnabled = pickingEnabled;
     drawStyles = new std::vector<std::string*>;
@@ -166,17 +168,17 @@ void GLModel::render(GLuint shaderProgram) {
 }
 
 GLModelAnimated::GLModelAnimated(
-    float* vertexData,
+    const float* vertexData,
     int numVertices,
     int numComponents,
     int stride,
     GLuint drawType,
     unsigned int stepSize,
     unsigned int windowSize,
-    long* timeData,
+    const long* timeData,
     std::string name,
-    float* color,
-    float* colordata,
+    const float* color,
+    const float* colordata,
     int useColorData,
     int id,
     std::vector<std::string> stringReps,
@@ -321,3 +323,4 @@ void GLModelAnimated::createTimeSteps() {
         }
     }
 }
+#endif

@@ -12,6 +12,7 @@ import jellyfish
 import numpy as np
 import pandas as pd
 import yaml
+import _zenith
 
 directory = os.path.dirname(os.path.abspath(__file__))
 color_yaml = directory + "/resources/colors.yml"
@@ -19,16 +20,6 @@ shaders = directory + "/shaders"
 
 with open(color_yaml, "r") as f:
     color_lookup = yaml.load(f, yaml.Loader)
-
-
-from zenith.cpp_bindings import (
-    GLModel,
-    GLModelAnimated,
-    Engine,
-    Engine3d,
-    create2dWorld,
-    create3dWorld,
-)
 
 
 class InvalidColorRepresentationError(ValueError):
@@ -52,15 +43,15 @@ class DrawStyles(Enum):
 
 class ZenithCommon(ABC):
     __num_layers__: int
-    __engine__: Engine
+    __engine__: _zenith.Engine
     __layer_ids__: Set[int]
-    __layers__: List[GLModel]
+    __layers__: List[_zenith.GLModel]
     __logger__: logging.Logger
 
     def __init__(self):
         self.__num_layers__: int = 0
         self.__layer_ids__: Set[int] = set()
-        self.__layers__: List[GLModel] = []
+        self.__layers__: List[_zenith.GLModel] = []
         self.__logger__: logging.Logger = logging.Logger(__name__)
         self.__logger__.setLevel(logging.INFO)
         self.__string_data__ = []
@@ -121,13 +112,7 @@ class ZenithCommon(ABC):
         return True
 
     def remove_layer(self, layer_id: int) -> bool:
-        if layer_id in self.__layer_ids__:
-            itr = self.__engine__.models.find(layer_id)
-            self.__engine__.models.erase(itr)
-            self.__layer_ids__.remove(layer_id)
-            return True
-        else:
-            return False
+        return self.__engine__.remove_model(layer_id)
 
     def check_color_data(self, color_data):
         if color_data is None:
@@ -211,7 +196,7 @@ class ZenithCommon(ABC):
 class Zenith2D(ZenithCommon):
     def __init__(self):
         super().__init__()
-        self.__engine__: Engine3d = create2dWorld(shaders)
+        self.__engine__: _zenith.Engine3d = _zenith.Engine3d(shaders)
 
     def add_layer(
         self,
@@ -242,7 +227,7 @@ class Zenith2D(ZenithCommon):
         self.__num_layers__ = self.__num_layers__ + 1
         model_id = self.__num_layers__
 
-        model = GLModel(
+        model = _zenith.create_gl_model(
             data.astype(np.float32),
             len(x_data),
             3,
@@ -256,7 +241,7 @@ class Zenith2D(ZenithCommon):
             string_data,
             picking_enabled
         )
-        self.__engine__.models[model_id] = model
+        self.__engine__.add_model(model_id, model)
         self.__layers__.append(model)
         self.__layer_ids__.add(model_id)
         return model_id
@@ -301,7 +286,7 @@ class Zenith2D(ZenithCommon):
         self.__num_layers__ = self.__num_layers__ + 1
         model_id = self.__num_layers__
 
-        model = GLModelAnimated(
+        model = _zenith.create_gl_model_animated(
             vertex_data.astype(np.float32),
             len(x_data),
             3,
@@ -319,7 +304,7 @@ class Zenith2D(ZenithCommon):
             picking_enabled
         )
         model_id = self.__num_layers__
-        self.__engine__.models[model_id] = model
+        self.__engine__.add_model(model_id, model)
         self.__layers__.append(model)
         self.__layer_ids__.add(model_id)
         return model_id
@@ -328,7 +313,7 @@ class Zenith2D(ZenithCommon):
 class Zenith3D(ZenithCommon):
     def __init__(self):
         super().__init__()
-        self.__engine__: Engine3d = create3dWorld(shaders)
+        self.__engine__: _zenith.Engine3d = _zenith.Engine3d(shaders)
 
     def add_layer(
         self,
@@ -360,7 +345,7 @@ class Zenith3D(ZenithCommon):
         self.__num_layers__ = self.__num_layers__ + 1
         model_id = self.__num_layers__
 
-        model = GLModel(
+        model = _zenith.create_gl_model(
             data.astype(np.float32),
             len(x_data),
             3,
@@ -375,7 +360,7 @@ class Zenith3D(ZenithCommon):
             picking_enabled
         )
 
-        self.__engine__.models[model_id] = model
+        self.__engine__.add_model(model_id, model)
         self.__layers__.append(model)
         self.__layer_ids__.add(model_id)
         return model_id
@@ -420,7 +405,7 @@ class Zenith3D(ZenithCommon):
         self.__num_layers__ = self.__num_layers__ + 1
         model_id = self.__num_layers__
 
-        model = GLModelAnimated(
+        model = _zenith.create_gl_model_animated(
             vertex_data.astype(np.float32),
             len(x_data),
             3,
@@ -437,7 +422,7 @@ class Zenith3D(ZenithCommon):
             string_data,
             picking_enabled
         )
-        self.__engine__.models[model_id] = model
+        self.__engine__.add_model(model_id, model)
         self.__layers__.append(model)
         self.__layer_ids__.add(model_id)
         return model_id

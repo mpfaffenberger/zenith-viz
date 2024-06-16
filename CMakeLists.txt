@@ -13,7 +13,6 @@ set(CMAKE_BUILD_TYPE Release)
 endif(NOT CMAKE_BUILD_TYPE)
 
 
-# headers are listed in a cmake file.
 macro(print_list LIST_NAME MESSAGE)
     foreach(item IN ITEMS ${${LIST_NAME}})
         message(${MESSAGE} ${item})
@@ -89,16 +88,15 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-
 cmake_path(GET PYTHON_EXEC PARENT_PATH PYTHON_DIR)
 cmake_path(GET PYTHON_DIR PARENT_PATH PYTHON_DIR)
 set(PYTHON_INCLUDE_DIR ${PYTHON_DIR}/include/python${PY_VERSION})
 message("py_include: " ${PYTHON_INCLUDE_DIR})
-include_directories(zenith/cpp zenith/cpp/imgui zenith/cpp/glm zenith/cpp/glfw/include zenith/cpp/glad/include zenith/cpp/pybind11/include zenith/cpp/glad/include)
+include_directories(zenith/cpp zenith/cpp/imgui zenith/cpp/glm zenith/cpp/glfw/include zenith/cpp/pybind11/include zenith/cpp/glad/include)
 set(PYTHON_DOT_H "${PYTHON_INCLUDE_DIR}/Python.h")
 message("Python: " ${PYTHON_DOT_H})
 include_directories(${PYTHON_INCLUDE_DIR})
 add_library(zenith SHARED ${ALL_SOURCES})
 target_link_libraries(zenith ${PYTHON_LIBRARIES})
 install(TARGETS zenith LIBRARY DESTINATION zenith/lib)
-
+add_executable(main ${ALL_SOURCES})

@@ -1,11 +1,11 @@
+#ifndef ZENITH_CPP_CONTROLS_CPP_
+#define ZENITH_CPP_CONTROLS_CPP_
+
 #include "Controls.hpp"
-#include <cstdio>
 #include <tuple>
 #include <vector>
-#include "glad/glad.h"
-#include <glm/fwd.hpp>
+#include "glad/gl.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include "imgui/imgui.h"
 
 double Controls::scrollOffset = 100.0;
 
@@ -172,3 +172,4 @@ std::tuple<int, glm::vec3, float> Controls::select(
         return result;
     }
 }
+#endif
