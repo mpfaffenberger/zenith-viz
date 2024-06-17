@@ -9,7 +9,7 @@ import pathlib
 import itertools
 
 setuptools.distutils.log.set_verbosity(1)
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 
 class get_pybind_include(object):
