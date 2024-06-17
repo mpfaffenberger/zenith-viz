@@ -1,9 +1,9 @@
 [submodule "zenith/cpp/glm"]
-	path = zenith/cpp/glm
+	path = zenith_viz/cpp/glm
 	url = https://github.com/g-truc/glm
 [submodule "zenith/cpp/glfw"]
-	path = zenith/cpp/glfw
+	path = zenith_viz/cpp/glfw
 	url = https://github.com/glfw/glfw.git
 [submodule "zenith/cpp/imgui"]
-	path = zenith/cpp/imgui
+	path = zenith_viz/cpp/imgui
 	url = https://github.com/ocornut/imgui.git

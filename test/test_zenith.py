@@ -1,9 +1,7 @@
-import os
-import sys
 from functools import reduce
 
 import numpy as np
-from zenith.zenith import Zenith2D, DrawStyles, InvalidColorRepresentationError
+from zenith_viz.zenith_viz import Zenith2D, DrawStyles, InvalidColorRepresentationError
 
 plot = Zenith2D()
 

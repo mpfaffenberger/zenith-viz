@@ -9,18 +9,15 @@ A high-speed graphics & plotting library for Python
 
 ### Instructions for Mac/Linux installation
 
-`conda install -c conda-forge cppyy glm glew glfw`
-
-`python setup.py install`
+`pip install zenith-viz`
 
 ### 2D Example with random data
 
 ![](./images/random_data.png)
 
-
 ```Python
 import numpy as np
-from plot_gl import Zenith2D, DrawStyles
+from zenith_viz import Zenith2D, DrawStyles
 plot = Zenith2D()
 x_data = np.random.randn(500000)
 y_data = np.random.randn(500000)
@@ -44,7 +41,7 @@ import random
 import numpy as np
 
 from umap import UMAP 
-from zenith import Zenith2D, DrawStyles, color_lookup
+from zenith_viz import Zenith2D, DrawStyles, color_lookup
 
 with gzip.open('train-images-idx3-ubyte.gz', 'rb') as f:
     f.read(16)
@@ -68,10 +65,9 @@ plot.show()
 ### 3D Something Cute
 ![](./images/something_cute.png)
 
-
 ```Python
 import numpy as np
-from zenith import Zenith3D, DrawStyles
+from zenith_viz import Zenith3D, DrawStyles
 
 def guess_what_i_am(x, y, z, s=10, r=28, b=2.667):
     x_dot = s*(y - x)

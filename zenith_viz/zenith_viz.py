@@ -156,7 +156,8 @@ class ZenithCommon(ABC):
                 partial_ld = partial(jellyfish.levenshtein_distance, color)
                 keys = color_lookup.keys()
                 most_similar = sorted(
-                    list(zip(keys, map(partial_ld, keys))), key=lambda pair: pair[1],
+                    list(zip(keys, map(partial_ld, keys))),
+                    key=lambda pair: pair[1],
                 )[0]
                 if most_similar[1] < 3:  # edit distance is pretty similar...
                     raise InvalidColorRepresentationError(
@@ -185,7 +186,9 @@ class ZenithCommon(ABC):
                 "Found no suitable representation of color for given input"
             )
 
-    def __validate_string_data__(self, string_data: Optional[Collection[str]], length: int) -> Collection[str]:
+    def __validate_string_data__(
+        self, string_data: Optional[Collection[str]], length: int
+    ) -> Collection[str]:
         if string_data is None:
             return []
         if len(string_data) == length:
@@ -207,9 +210,8 @@ class Zenith2D(ZenithCommon):
         color: Union[str, Collection[int], Collection[float]],
         color_data: Optional[Collection[float]] = None,
         string_data: Optional[Collection[str]] = None,
-        picking_enabled: Optional[bool] = False
+        picking_enabled: Optional[bool] = False,
     ) -> Union[int, bool]:
-
         use_color_data = 1 if color_data is not None else 0
 
         if not self._check_values(x_data, y_data):
@@ -239,7 +241,7 @@ class Zenith2D(ZenithCommon):
             use_color_data,
             model_id,
             string_data,
-            picking_enabled
+            picking_enabled,
         )
         self.__layers__.append(model)
         self.__layer_ids__.add(model_id)
@@ -256,9 +258,8 @@ class Zenith2D(ZenithCommon):
         name: str,
         color_data: Optional[Collection[float]] = None,
         string_data: Optional[Collection[str]] = None,
-        picking_enabled: Optional[bool] = False
+        picking_enabled: Optional[bool] = False,
     ) -> Union[int, bool]:
-
         use_color_data = 1 if color_data is not None else 0
 
         if not self._check_values(x_data, y_data, time_data=time_data):
@@ -300,7 +301,7 @@ class Zenith2D(ZenithCommon):
             use_color_data,
             model_id,
             string_data,
-            picking_enabled
+            picking_enabled,
         )
         model_id = self.__num_layers__
         self.__engine__.add_model(model_id, model)
@@ -324,9 +325,8 @@ class Zenith3D(ZenithCommon):
         draw_style: Union[int, DrawStyles],
         color_data: Optional[Collection[float]] = None,
         string_data: Optional[Collection[str]] = None,
-        picking_enabled: Optional[bool] = False
+        picking_enabled: Optional[bool] = False,
     ) -> Union[int, bool]:
-
         use_color_data = 1 if color_data is not None else 0
 
         if not self._check_values(x_data, y_data, z_data):
@@ -356,7 +356,7 @@ class Zenith3D(ZenithCommon):
             use_color_data,
             model_id,
             string_data,
-            picking_enabled
+            picking_enabled,
         )
 
         self.__engine__.add_model(model_id, model)
@@ -376,9 +376,8 @@ class Zenith3D(ZenithCommon):
         name: str,
         color_data: Optional[Collection[float]] = None,
         string_data: Optional[Collection[str]] = None,
-        picking_enabled: Optional[bool] = False
+        picking_enabled: Optional[bool] = False,
     ) -> Union[int, bool]:
-
         use_color_data = 1 if color_data is not None else 0
 
         if not self._check_values(x_data, y_data, z_data, time_data):
@@ -393,9 +392,7 @@ class Zenith3D(ZenithCommon):
                 "Window size must be gt than 0 and lte to length of x, y, and time_data"
             )
             return False
-        vertex_data = np.ravel(
-            np.vstack((x_data, y_data, z_data)), order="F"
-        )
+        vertex_data = np.ravel(np.vstack((x_data, y_data, z_data)), order="F")
         time_array = np.array(time_data, dtype=np.int64)
         color = (
             np.array(self.__validate_and_map_color__(color), dtype=np.float32) / 255.0
@@ -419,7 +416,7 @@ class Zenith3D(ZenithCommon):
             use_color_data,
             model_id,
             string_data,
-            picking_enabled
+            picking_enabled,
         )
         self.__engine__.add_model(model_id, model)
         self.__layers__.append(model)
