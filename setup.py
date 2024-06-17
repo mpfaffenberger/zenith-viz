@@ -11,7 +11,7 @@ import os
 
 setuptools.distutils.log.set_verbosity(1)
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 
 class get_pybind_include(object):
