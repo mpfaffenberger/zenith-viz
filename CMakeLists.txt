@@ -27,51 +27,51 @@ macro(glob_headers source_dir output_var)
 endmacro()
 
 macro(glob_sources source_dir output_var)
-    FILE(GLOB ${output_var} CONFIGURE_DEPENDS ${source_dir}/*.c ${source_dir}/*.cpp)
+    FILE(GLOB ${output_var} CONFIGURE_DEPENDS ${source_dir}/*.c ${source_dir}/*.cpp ${source_dir}/*.m)
     print_list(${output_var} "Found Source File: ")
 endmacro()
 
-glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp ZENITH_SOURCES)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp ZENITH_HEADERS)
+glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp ZENITH_SOURCES)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp ZENITH_HEADERS)
 
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glm/glm GLM_BASE)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glm/glm/detail GLM_DETAIL)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glm/glm/ext GLM_EXT)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glm/glm/gtc GLM_GTC)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glm/glm/gtx GLM_GTX)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glm/glm/simd GLM_SIMD)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glm/glm GLM_BASE)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glm/glm/detail GLM_DETAIL)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glm/glm/ext GLM_EXT)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glm/glm/gtc GLM_GTC)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glm/glm/gtx GLM_GTX)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glm/glm/simd GLM_SIMD)
 
 set(GLM_ALL ${GLM_BASE} ${GLM_DETAIL} ${GLM_EXT} ${GLM_GTC} ${GLM_GTX} ${GLM_SIMD})
 
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glfw/include/GLFW GLFW_BASE)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glfw/src GLFW_SRC_HEADERS)
-glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glfw/src GLFW_SRC_FILES)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glfw/include/GLFW GLFW_BASE)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glfw/src GLFW_SRC_HEADERS)
+glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glfw/src GLFW_SRC_FILES)
 
 set(GLFW_ALL ${GLFW_BASE} ${GLFW_SRC_HEADERS} ${GLFW_SRC_FILES})
 
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glad/include/glad GLAD_BASE)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glad/include/KHR GLAD_KHR)
-glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/glad/src GLAD_SRC)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glad/include/glad GLAD_BASE)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glad/include/KHR GLAD_KHR)
+glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/glad/src GLAD_SRC)
 
 set(GLAD_ALL ${GLAD_BASE} ${GLAD_KHR} ${GLAD_SRC})
 
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui IMGUI_BASE_HEADERS)
-glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui IMGUI_BASE_SOURCES)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui IMGUI_BASE_HEADERS)
+glob_sources(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui IMGUI_BASE_SOURCES)
 set(IMGUI_ALL ${IMGUI_BASE_HEADERS} ${IMGUI_BASE_SOURCES})
 LIST(
     APPEND
     IMGUI_ALL
-    ${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui/backends/imgui_impl_glfw.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui/backends/imgui_impl_glfw.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui/backends/imgui_impl_opengl3.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui/backends/imgui_impl_opengl3_loader.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/imgui/backends/imgui_impl_opengl3.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui/backends/imgui_impl_glfw.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui/backends/imgui_impl_glfw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui/backends/imgui_impl_opengl3.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui/backends/imgui_impl_opengl3_loader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/pybind11/include/pybind11 PYBIND11_BASE)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/pybind11/include/pybind11/detail PYBIND11_DETAIL)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/pybind11/include/pybind11/stl PYBIND11_STL)
-glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith/cpp/pybind11/include/pybind11/eigen PYBIND11_EIGEN)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/pybind11/include/pybind11 PYBIND11_BASE)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/pybind11/include/pybind11/detail PYBIND11_DETAIL)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/pybind11/include/pybind11/stl PYBIND11_STL)
+glob_headers(${CMAKE_CURRENT_SOURCE_DIR}/zenith_viz/cpp/pybind11/include/pybind11/eigen PYBIND11_EIGEN)
 
 set(PYBIND_ALL, ${PYBIND11_BASE} ${PYBIND11_DETAIL} ${PYBIND11_STL} ${PYBIND11_EIGEN})
 
@@ -93,13 +93,15 @@ cmake_path(GET PYTHON_EXEC PARENT_PATH PYTHON_DIR)
 cmake_path(GET PYTHON_DIR PARENT_PATH PYTHON_DIR)
 set(PYTHON_INCLUDE_DIR ${PYTHON_DIR}/include/python${PY_VERSION})
 message("py_include: " ${PYTHON_INCLUDE_DIR})
-include_directories(zenith/cpp zenith/cpp/imgui zenith/cpp/glm zenith/cpp/glfw/include zenith/cpp/pybind11/include zenith/cpp/glad/include)
+
+find_library(COCOA_LIBRARY Cocoa)
+include_directories(zenith_viz/cpp zenith_viz/cpp/imgui zenith_viz/cpp/glm zenith_viz/cpp/glfw/include zenith_viz/cpp/pybind11/include zenith_viz/cpp/glad/include)
 set(PYTHON_DOT_H "${PYTHON_INCLUDE_DIR}/Python.h")
 message("Python: " ${PYTHON_DOT_H})
 include_directories(${PYTHON_INCLUDE_DIR})
-add_library(zenith SHARED ${ALL_SOURCES})
-target_link_libraries(zenith ${PYTHON_LIBRARIES})
-install(TARGETS zenith LIBRARY DESTINATION zenith/lib)
+#add_library(zenith SHARED ${ALL_SOURCES})
 
+#install(TARGETS zenith LIBRARY DESTINATION zenith/lib)
 add_executable(main ${ALL_SOURCES})
-target_compile_definitions(main PRIVATE _GLFW_X11)
+target_compile_definitions(main PRIVATE _GLFW_COCOA)
+target_link_libraries(main ${PYTHON_LIBRARIES} "-framework OpenGL" "-framework Cocoa" "-framework IOKit" "-framework Foundation" "-framework Metal" "-framework QuartzCore")
