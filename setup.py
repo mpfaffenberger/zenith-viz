@@ -1,7 +1,7 @@
 from typing import List
 
-from setuptools import setup, find_namespace_packages
-from setuptools.command.build_ext import build_ext, Extension
+from setuptools import setup, find_namespace_packages, Extension
+from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 import pathlib
