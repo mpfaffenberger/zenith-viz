@@ -19,8 +19,8 @@ A high-speed graphics & plotting library for Python
 import numpy as np
 from zenith_viz import Zenith2D, DrawStyles
 plot = Zenith2D()
-x_data = np.random.randn(500000)
-y_data = np.random.randn(500000)
+x_data = np.random.randn(50000)
+y_data = np.random.randn(50000)
 layer_idx = plot.add_layer(x_data, y_data, name="random", color="CornflowerBlue", draw_style=DrawStyles.GL_POINTS)
 plot.show()
 ```
@@ -76,7 +76,7 @@ def guess_what_i_am(x, y, z, s=10, r=28, b=2.667):
     return x_dot, y_dot, z_dot
     
 dt = 0.01
-num_steps = 1000000
+num_steps = 1000
 xs = np.empty(num_steps + 1)
 ys = np.empty(num_steps + 1)
 zs = np.empty(num_steps + 1)
